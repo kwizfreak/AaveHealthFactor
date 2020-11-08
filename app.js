@@ -11,12 +11,12 @@ const LendingPool = new web3.eth.Contract(JSON.parse(fs.readFileSync('./LendingP
 const output = async () => {
   console.log('Block Number: ', await web3.eth.getBlockNumber())
 
-  let healthFactor = (await LendingPool.methods.getUserAccountData(userAddress).call({}, '10394277')).healthFactor
+  let healthFactor = (await LendingPool.methods.getUserAccountData(userAddress).call()).healthFactor
 
   if(healthFactor === '115792089237316195423570985008687907853269984665640564039457584007913129639935') {
     healthFactor = 'NIL (No Collateral)'
   } else {
-    healthFactor = BigNumber.healthFactordividedBy(1e18).toFixed(2)
+    healthFactor = BigNumber(healthFactor).dividedBy(1e18).toFixed(2)
   }
   console.log('Heath Factor: ', healthFactor)
 }
